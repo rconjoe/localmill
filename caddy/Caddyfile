@@ -1,15 +1,13 @@
 {
 	layer4 {
 		:25 {
-			proxy {
-				to 192.168.86.36:2525
-			}
+			proxy to 192.168.86.36:2525
 		}
 	}
 }
 
 {$BASE_URL} {
-        bind {$ADDRESS}
-        reverse_proxy /ws/* http://192.168.86.39:3001
-        reverse_proxy /* http://192.168.86.36:8000
+    bind {$ADDRESS}
+    reverse_proxy /ws/* http://192.168.86.39:3001
+    reverse_proxy /* http://192.168.86.36:8000
 }
