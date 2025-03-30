@@ -1,0 +1,28 @@
+version: "3.7"
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "${LOG_MAX_SIZE:-20m}"
+    max-file: "${LOG_MAX_FILE:-10}"
+    compress: "true"
+
+services:
+  windmill_server:
+    image: ghcr.io/windmill-labs/windmill:main
+    pull_policy: always
+    deploy:
+      replicas: 1
+    restart: unless-stopped
+    expose:
+      - 8000
+      - 2525
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=server
+    volumes:
+      - worker_logs:/tmp/windmill/logs
+    logging: *default-logging
+
+volumes:
+  worker_logs: null
